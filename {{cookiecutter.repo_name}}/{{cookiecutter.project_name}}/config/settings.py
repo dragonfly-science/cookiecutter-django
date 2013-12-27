@@ -60,11 +60,7 @@ class Common(Configuration):
     INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
     INSTALLED_APPS += (
-        # Needs to come last for now because of a weird edge case between
-        #   South and allauth
-        'allauth',  # registration
-        'allauth.account',  # registration
-        'allauth.socialaccount',  # registration
+        'browserid',  # registration
     )
     ########## END APP CONFIGURATION
 
