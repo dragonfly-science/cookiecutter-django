@@ -1,4 +1,8 @@
-{% raw %}{% load staticfiles i18n %}{% load browserid %}<!DOCTYPE html>
+{% raw %}
+{% load staticfiles i18n %}
+{% load browserid %}
+{% load compressed %}
+<!DOCTYPE html>
 <html lang="en" ng-app>
   <head>
     <meta charset="utf-8">
@@ -59,7 +63,29 @@
       {% endif %}
 
       {% block content %}
-        <p>Use this document as a way to quick start any new project.</p>
+         {% verbatim %}
+            <script type="text/x-handlebars" data-template-name="index">
+              <div class="container" id="main">
+                <div class="row">
+                  <div>
+                    <div class="col-md-3">
+                      <div class="well sidebar-nav">
+                        <strong>Colors</strong>
+                        <ul class="list-group">
+                        {{#each item in controller}}
+                            <li class="list-group-item">{{item}}</li>
+                        {{/each}}
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-md-9">
+                    {{outlet}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </script>
+         {% endverbatim %}
       {% endblock content %}
 
     </div> <!-- /container -->
@@ -76,15 +102,17 @@
       <!-- Latest compiled and minified JavaScript -->
       <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
       <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.2.1/handlebars.min.js"></script>
-      <script src="http://builds.emberjs.com/beta/ember.min.js"></script>
-      <script src="http://builds.emberjs.com/beta/ember-data.min.js"></script>
+     
+      <script src="http://builds.emberjs.com/beta/ember.js"></script>
+      <script src="http://builds.emberjs.com/beta/ember-data.js"></script>
 
       {% browserid_js %}
 
       <!-- Your stuff: Third-party javascript libraries go here -->
 
       <!-- place project specific Javascript in this file -->
-      <script src="{% static 'js/project.js' %}"></script>
+      {% compressed_js 'app' %}
+
     {% endblock javascript %}
   </body>
 </html>

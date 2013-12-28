@@ -128,7 +128,7 @@ class Common(Configuration):
 
     ########## GENERAL CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#time-zone
-    TIME_ZONE = 'America/Los_Angeles'
+    TIME_ZONE = 'Pacific/Auckland'
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
     LANGUAGE_CODE = 'en-us'
@@ -184,6 +184,7 @@ class Common(Configuration):
     # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
     STATICFILES_DIRS = (
         join(BASE_DIR, 'static'),
+        join(BASE_DIR, 'components'),
     )
 
     # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
@@ -218,6 +219,29 @@ class Common(Configuration):
     BROWSERID_AUDIENCES = ['http://localhost:8000', 'http://127.0.0.1:8000']
 
     ########## END AUTHENTICATION CONFIGURATION
+
+    ########## PIPELINE
+    STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+    PIPELINE_COMPILERS = (
+        'pipeline.compilers.coffee.CoffeeScriptCompiler',
+    )
+
+    PIPELINE_JS = {
+        'app': {
+            'source_filenames': (
+                'scripts/app.coffee',
+                'scripts/controllers/*.coffee',
+                'scripts/store.coffee',
+                'scripts/models/*.coffee',
+                'scripts/routes/*.coffee',
+                'scripts/views/*.coffee',
+                'scripts/router.coffee',
+            ),
+            'output_filename': 'js/app.js',
+        }
+    }    
+    BOWER_COMPONENTS_ROOT = ""
+    ########## END PIPELINE
 
     ########## Custom user app defaults
     # Select the correct user model
