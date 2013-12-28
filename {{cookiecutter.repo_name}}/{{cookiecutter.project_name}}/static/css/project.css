@@ -31,3 +31,16 @@
   background-color: #f2dede;
   border-color: #eed3d7;
 }
+
+.persona-button {
+  height: 24px;
+  margin-top: 12px;
+}
+
+.persona-button span {
+   height: 24px;
+   padding-top: 0;
+   margin-top: -14px;
+   padding-bottom: 0;
+   vertical-align: middle;
+}

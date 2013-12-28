@@ -23,7 +23,7 @@ urlpatterns = patterns('',
 
     # User management
     url(r'^users/', include("{{cookiecutter.project_name}}.users.urls", namespace="users")),
-
+    (r'', include('django_browserid.urls')),
     # Uncomment the next line to enable avatars
     url(r'^avatar/', include('avatar.urls')),
 

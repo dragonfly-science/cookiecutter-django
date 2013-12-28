@@ -48,7 +48,6 @@ class Common(Configuration):
         'south',  # Database migration helpers:
         'tastypie', # For tastypie
         'pipeline', # For staticfiles management
-        'djangobower', # For bower dependencies
         'avatar',  # for user avatars
         'django_browserid', # For persona
     )
@@ -151,8 +150,6 @@ class Common(Configuration):
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
     TEMPLATE_CONTEXT_PROCESSORS = (
         'django.contrib.auth.context_processors.auth',
-        "allauth.account.context_processors.account",
-        "allauth.socialaccount.context_processors.socialaccount",
         'django.core.context_processors.debug',
         'django.core.context_processors.i18n',
         'django.core.context_processors.media',
@@ -215,32 +212,23 @@ class Common(Configuration):
     ########## AUTHENTICATION CONFIGURATION
     AUTHENTICATION_BACKENDS = (
         "django.contrib.auth.backends.ModelBackend",
+        'django_browserid.auth.BrowserIDBackend',
     )
 
-    # Some really nice defaults
-    ACCOUNT_AUTHENTICATION_METHOD = "username"
-    ACCOUNT_EMAIL_REQUIRED = True
-    ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+    BROWSERID_AUDIENCES = ['http://localhost:8000', 'http://127.0.0.1:8000']
+
     ########## END AUTHENTICATION CONFIGURATION
 
     ########## Custom user app defaults
     # Select the correct user model
     AUTH_USER_MODEL = "users.User"
-    LOGIN_REDIRECT_URL = "users:redirect"
+    LOGIN_REDIRECT_URL = "/"
+    # LOGIN_REDIRECT_URL = "users:redirect"
     ########## END Custom user app defaults
 
     ########## SLUGLIFIER
     AUTOSLUG_SLUGIFY_FUNCTION = "slugify.slugify"
     ########## END SLUGLIFIER
-
-    ########## BOWER
-    BOWER_COMPONENTS_ROOT = BASE_DIR
-    BOWER_INSTALLED_APPS = ('ember#1.2.0',
-                            'bootstrap#3.0.3',
-                            'ember-data#1.0.0-beta.4',
-                            'handlebars#1.0.0',
-                            'jquery#2.0.3')
-    ########## END BOWER
 
     ########## LOGGING CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
@@ -323,7 +311,7 @@ class Production(Common):
     SECURE_HSTS_INCLUDE_SUBDOMAINS = values.BooleanValue(True)
     SECURE_FRAME_DENY = values.BooleanValue(True)
     SECURE_CONTENT_TYPE_NOSNIFF = values.BooleanValue(True)
-    SECURE_BROWSER_XSS_FILTER = values.BooleanValue(True)
+    SECURE_BROWERER_XSS_FILTER = values.BooleanValue(True)
     SESSION_COOKIE_SECURE = values.BooleanValue(False)
     SESSION_COOKIE_HTTPONLY = values.BooleanValue(True)
     SECURE_SSL_REDIRECT = values.BooleanValue(True)

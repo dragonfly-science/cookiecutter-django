@@ -1,4 +1,4 @@
-{% raw %}{% load staticfiles i18n %}<!DOCTYPE html>
+{% raw %}{% load staticfiles i18n %}{% load browserid %}<!DOCTYPE html>
 <html lang="en" ng-app>
   <head>
     <meta charset="utf-8">
@@ -14,10 +14,12 @@
 
     {% block css %}
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
 
     <!-- Optional theme -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+
+    {% browserid_css %}
 
     <!-- Your stuff: Third-party css libraries go here -->
 
@@ -25,9 +27,6 @@
     <link href="{% static 'css/project.css' %}" rel="stylesheet">
     {% endblock %}
 
-    {% block angular %}
-      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-    {% endblock %}
 
   </head>
 
@@ -37,15 +36,15 @@
       <div class="container">
         <a class="navbar-brand" href="/">{% endraw %}{{ cookiecutter.project_name }}{% raw %}</a>
         <ul class="nav navbar-nav">
-          <li class="active"><a href="{% url 'home' %}">Home</a></li>
           <li><a href="{% url 'about' %}">About</a></li>
+        </ul>
 
+        <ul class="nav navbar-nav pull-right">
           {% if request.user.is_authenticated %}
-            <li><a href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a></li>
-            <li><a href="{% url 'account_logout' %}">{% trans "Logout" %}</a></li>
+            <!--li><a href="{% url 'users:detail' request.user.username  %}">My Profile</a></li-->
+            <li>{% browserid_logout text='Logout' %}</li>
           {% else %}
-            <li><a href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a></li>
-            <li><a href="{% url 'account_login' %}">{% trans "Log In" %}</a></li>
+            <li>{% browserid_login text='Login' color='dark' %}</li>
           {% endif %}
         </ul>
       </div>
@@ -72,10 +71,15 @@
     <!-- Placed at the end of the document so the pages load faster -->
     {% block javascript %}
       <!-- Latest JQuery -->
-      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
       <!-- Latest compiled and minified JavaScript -->
-      <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+      <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.2.1/handlebars.min.js"></script>
+      <script src="http://builds.emberjs.com/beta/ember.min.js"></script>
+      <script src="http://builds.emberjs.com/beta/ember-data.min.js"></script>
+
+      {% browserid_js %}
 
       <!-- Your stuff: Third-party javascript libraries go here -->
 
