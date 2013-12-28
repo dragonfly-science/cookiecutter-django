@@ -46,22 +46,22 @@ class Common(Configuration):
     )
     THIRD_PARTY_APPS = (
         'south',  # Database migration helpers:
-        'crispy_forms',  # Form layouts
+        'tastypie', # For tastypie
+        'pipeline', # For staticfiles management
+        'djangobower', # For bower dependencies
         'avatar',  # for user avatars
+        'django_browserid', # For persona
     )
 
     # Apps specific for this project go here.
     LOCAL_APPS = (
-        'users',  # custom users app
+        '{{cookiecutter.project_name}}.users',  # custom users app
         # Your stuff: custom apps go here
     )
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
     INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
-    INSTALLED_APPS += (
-        'browserid',  # registration
-    )
     ########## END APP CONFIGURATION
 
     ########## MIDDLEWARE CONFIGURATION
@@ -193,6 +193,7 @@ class Common(Configuration):
     STATICFILES_FINDERS = (
         'django.contrib.staticfiles.finders.FileSystemFinder',
         'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+        'djangobower.finders.BowerFinder',
     )
     ########## END STATIC FILE CONFIGURATION
 
@@ -205,16 +206,15 @@ class Common(Configuration):
     ########## END MEDIA CONFIGURATION
 
     ########## URL Configuration
-    ROOT_URLCONF = 'config.urls'
+    ROOT_URLCONF = '{{cookiecutter.project_name}}.config.urls'
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
-    WSGI_APPLICATION = 'config.wsgi.application'
+    WSGI_APPLICATION = '{{cookiecutter.project_name}}.config.wsgi.application'
     ########## End URL Configuration
 
     ########## AUTHENTICATION CONFIGURATION
     AUTHENTICATION_BACKENDS = (
         "django.contrib.auth.backends.ModelBackend",
-        "allauth.account.auth_backends.AuthenticationBackend",
     )
 
     # Some really nice defaults
@@ -232,6 +232,15 @@ class Common(Configuration):
     ########## SLUGLIFIER
     AUTOSLUG_SLUGIFY_FUNCTION = "slugify.slugify"
     ########## END SLUGLIFIER
+
+    ########## BOWER
+    BOWER_COMPONENTS_ROOT = BASE_DIR
+    BOWER_INSTALLED_APPS = ('ember#1.2.0',
+                            'bootstrap#3.0.3',
+                            'ember-data#1.0.0-beta.4',
+                            'handlebars#1.0.0',
+                            'jquery#2.0.3')
+    ########## END BOWER
 
     ########## LOGGING CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#logging

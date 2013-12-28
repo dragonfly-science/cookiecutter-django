@@ -22,8 +22,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     # User management
-    url(r'^users/', include("users.urls", namespace="users")),
-    url(r'^accounts/', include('allauth.urls')),
+    url(r'^users/', include("{{cookiecutter.project_name}}.users.urls", namespace="users")),
 
     # Uncomment the next line to enable avatars
     url(r'^avatar/', include('avatar.urls')),
