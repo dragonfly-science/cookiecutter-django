@@ -7,5 +7,6 @@
     "year": "2013",
     "domain_name": "example.com",
     "version": "0.1.0",
-    "app_name": "App"
+    "app_name": "App",
+    "deploy_port": "8010"
 }
