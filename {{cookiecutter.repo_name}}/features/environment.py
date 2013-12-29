@@ -1,13 +1,11 @@
 import os
 import urlparse
-import sys
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.config.settings')
 os.environ.setdefault('DJANGO_CONFIGURATION', 'Local')
 
 from configurations.management import execute_from_command_line
-
-execute_from_command_line(sys.argv)
+from configurations import importer
 
 
 def before_all(context):
@@ -16,6 +14,7 @@ def before_all(context):
     # We'll use thise later to frog-march Django through the motions
     # of setting up and tearing down the test environment, including
     # test databases.
+    importer.install(check_options=True)
     context.runner = DjangoTestSuiteRunner()
 
     ## If you use South for migrations, uncomment this to monkeypatch
